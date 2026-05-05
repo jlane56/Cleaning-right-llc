@@ -405,22 +405,101 @@
 
     /* ── RESPONSIVE ── */
     @media (max-width: 960px) {
-      .about-grid    { grid-template-columns: 1fr; gap: 3.5rem; }
+      .section { padding: 4.5rem 1.8rem; }
+      .how     { padding: 4.5rem 1.8rem; }
+      .about-grid    { grid-template-columns: 1fr; gap: 3rem; }
       .about-img-bg  { display: none; }
+      .about-img-dots{ display: none; }
       .services-grid { grid-template-columns: 1fr; }
       .why-grid      { grid-template-columns: 1fr; }
       .footer-inner  { grid-template-columns: 1fr 1fr; }
       .footer-brand  { grid-column: 1 / -1; }
     }
+
     @media (max-width: 640px) {
-      .stats-inner { grid-template-columns: 1fr; gap: 2rem; }
-      .steps { grid-template-columns: 1fr; }
-      .steps::before { display: none; }
-      .nav-links { display: none; position: absolute; top: 72px; left: 0; right: 0; background: var(--white); flex-direction: column; padding: 1.5rem 2rem; gap: 1.2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.12); }
-      .nav-links.open { display: flex; }
+      /* Nav mobile */
+      .nav { padding: 0 1.25rem; }
       .nav-toggle { display: flex; }
+      .nav-links {
+        display: none;
+        position: absolute; top: 72px; left: 0; right: 0;
+        background: var(--white);
+        flex-direction: column;
+        padding: 1.2rem 1.5rem 1.5rem;
+        gap: 0;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.13);
+      }
+      .nav-links.open { display: flex; }
+      .nav-links li { border-bottom: 1px solid rgba(28,63,115,0.07); }
+      .nav-links li:last-child { border-bottom: none; padding-top: 0.8rem; }
+      .nav-links a { color: var(--text) !important; font-size: 1rem; display: block; padding: 0.75rem 0; }
+      /* Force nav solid when menu is open */
+      .nav.menu-open { background: var(--white) !important; box-shadow: 0 2px 20px rgba(28,63,115,0.1); }
+      .nav.menu-open .nav-logo img { filter: none !important; }
+      .nav.menu-open .nav-toggle span { background: var(--navy) !important; }
+
+      /* Section padding */
+      .section     { padding: 3.5rem 1.25rem; }
+      .how         { padding: 3.5rem 1.25rem; }
+      .cta-banner  { padding: 4rem 1.25rem; }
+      .stats-strip { padding: 1.8rem 1.25rem; }
+      .footer      { padding: 3rem 1.25rem 1.5rem; }
+
+      /* Hero */
+      .hero { padding: 6.5rem 1.25rem 5rem; }
+      .hero-badge { font-size: 0.72rem; padding: 0.32rem 0.9rem; }
+      .hero-sub   { font-size: 1rem; margin-bottom: 2rem; }
+      .hero-actions { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+      .hero-actions .btn { justify-content: center; width: 100%; }
+      .hero-scroll-hint { display: none; }
+
+      /* Stats: keep 3-col but scale down */
+      .stats-inner { grid-template-columns: repeat(3, 1fr); gap: 0.4rem; }
+      .stat-number { font-size: 1.8rem; }
+      .stat-label  { font-size: 0.72rem; }
+
+      /* About */
+      .about-img-wrap img { aspect-ratio: 3/2; border-radius: 14px; }
+      .about-tagline { font-size: 1rem !important; }
+
+      /* Services */
       .services-header { flex-direction: column; align-items: flex-start; }
+      .services-header .section-sub { text-align: left !important; max-width: 100%; }
+      .service-card { grid-template-columns: 48px 1fr; gap: 0 1rem; padding: 1.6rem; }
+      .service-icon-wrap { width: 48px; height: 48px; border-radius: 11px; }
+      .service-icon-wrap svg { width: 22px; height: 22px; }
+      .service-card-footer { margin-top: 1rem; padding-top: 1rem; }
+
+      /* How it works */
+      .steps { grid-template-columns: 1fr; gap: 1.8rem; }
+      .steps::before { display: none; }
+      .step-num { width: 62px; height: 62px; font-size: 1.6rem; }
+      .how-inner .section-sub { margin-bottom: 2.5rem; }
+
+      /* Why */
+      .why-card { padding: 1.35rem; gap: 1rem; }
+      .why-icon { width: 44px; height: 44px; border-radius: 10px; flex-shrink: 0; }
+      .why-icon svg { width: 20px; height: 20px; }
+
+      /* CTA */
+      .cta-actions { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+      .cta-actions .btn { justify-content: center; width: 100%; }
+
+      /* Footer */
       .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; align-items: center; text-align: center; gap: 0.3rem; }
+
+      /* Intro */
+      .intro-logo-wrap img { width: 118px; height: 118px; }
+      .intro-name { font-size: 1.2rem; }
+      .intro-tag  { font-size: 0.88rem; }
+    }
+
+    /* Very small screens */
+    @media (max-width: 380px) {
+      .hero h1 { font-size: 2.4rem; }
+      .stat-number { font-size: 1.5rem; }
+      .stat-label  { font-size: 0.65rem; }
     }
   </style>
 </head>
@@ -449,7 +528,7 @@
     <a class="nav-logo" href="index.html">
       <img src="logo.png" alt="Cleaning Right LLC" />
     </a>
-    <button class="nav-toggle" aria-label="Menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+    <button class="nav-toggle" aria-label="Menu" onclick="toggleMenu(this)">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links">
@@ -725,6 +804,20 @@
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 40);
     }, { passive: true });
+
+    /* ── Mobile nav toggle ── */
+    function toggleMenu() {
+      const links = document.querySelector('.nav-links');
+      const isOpen = links.classList.toggle('open');
+      nav.classList.toggle('menu-open', isOpen);
+    }
+    // Close menu when a nav link is tapped
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.remove('open');
+        nav.classList.remove('menu-open');
+      });
+    });
 
     /* ── Floating bubbles ── */
     const bubbleData = [
