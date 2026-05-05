@@ -122,9 +122,13 @@
       transition: background 0.35s, box-shadow 0.35s;
     }
     .nav.scrolled { background: var(--white); box-shadow: 0 2px 20px rgba(28,63,115,0.1); }
-    .nav-logo img { height: 48px; transition: filter 0.35s; }
-    .nav.scrolled .nav-logo img { filter: none; }
-    .nav:not(.scrolled) .nav-logo img { filter: brightness(0) invert(1); }
+
+    .nav-logo { display: flex; align-items: center; gap: 0.65rem; }
+    .nav-logo img { height: 46px; width: 46px; object-fit: contain; border-radius: 50%; flex-shrink: 0; transition: box-shadow 0.3s; }
+    .nav.scrolled .nav-logo img { box-shadow: 0 0 0 1.5px rgba(28,63,115,0.12); }
+    .nav-brand { font-weight: 800; font-size: 0.98rem; line-height: 1.2; letter-spacing: 0.01em; transition: color 0.35s; }
+    .nav.scrolled .nav-brand { color: var(--navy); }
+    .nav:not(.scrolled) .nav-brand { color: var(--white); text-shadow: 0 1px 6px rgba(0,0,0,0.3); }
 
     .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
     .nav-links a { font-weight: 600; font-size: 0.92rem; transition: color 0.2s; }
@@ -395,7 +399,9 @@
     /* ── FOOTER ── */
     .footer { background: #080f1e; color: rgba(255,255,255,0.6); padding: 4rem 2rem 2rem; }
     .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.07); }
-    .footer-brand img { height: 50px; margin-bottom: 1rem; filter: brightness(0) invert(1) opacity(0.85); }
+    .footer-brand-row { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem; }
+    .footer-brand-row img { height: 54px; width: 54px; object-fit: contain; border-radius: 50%; flex-shrink: 0; }
+    .footer-brand-row span { color: var(--white); font-weight: 800; font-size: 1.05rem; line-height: 1.25; }
     .footer-brand p { font-size: 0.88rem; max-width: 270px; line-height: 1.7; }
     .footer-col h4 { color: var(--sky); font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.2rem; }
     .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
@@ -527,6 +533,7 @@
   <nav class="nav" id="main-nav">
     <a class="nav-logo" href="index.html">
       <img src="logo.png" alt="Cleaning Right LLC" />
+      <span class="nav-brand">Cleaning<br>Right LLC</span>
     </a>
     <button class="nav-toggle" aria-label="Menu" onclick="toggleMenu(this)">
       <span></span><span></span><span></span>
@@ -762,7 +769,10 @@
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">
-        <img src="logo.png" alt="Cleaning Right LLC" />
+        <div class="footer-brand-row">
+          <img src="logo.png" alt="Cleaning Right LLC" />
+          <span>Cleaning<br>Right LLC</span>
+        </div>
         <p>Professional residential cleaning for the greater Peoria County, IL area. Done <em>"The Way It Ought To Be."</em></p>
       </div>
       <div class="footer-col">

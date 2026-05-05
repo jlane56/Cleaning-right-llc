@@ -20,7 +20,9 @@ h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); } h2 { font-size: clamp(1.8rem, 3.5v
 .btn-navy { background: var(--navy); color: var(--white); } .btn-navy:hover { background: var(--navy-dark); }
 .nav { position: sticky; top: 0; z-index: 100; background: var(--white); box-shadow: 0 2px 12px rgba(28,63,115,0.08); }
 .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 2rem; height: 72px; display: flex; align-items: center; justify-content: space-between; }
-.nav-logo img { height: 52px; }
+.nav-logo { display: flex; align-items: center; gap: 0.65rem; }
+    .nav-logo img { height: 46px; width: 46px; object-fit: contain; border-radius: 50%; flex-shrink: 0; }
+    .nav-brand { font-weight: 800; font-size: 0.98rem; line-height: 1.2; color: var(--navy); letter-spacing: 0.01em; }
 .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
 .nav-links a { font-weight: 600; font-size: 0.95rem; color: var(--text); transition: color 0.2s; } .nav-links a:hover { color: var(--blue); }
 .nav-toggle { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
@@ -46,7 +48,9 @@ h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); } h2 { font-size: clamp(1.8rem, 3.5v
 .detail-cta { text-align: center; padding: 4rem 2rem; background: var(--off-white); }
 .footer { background: var(--navy-dark); color: rgba(255,255,255,0.7); padding: 3rem 2rem 1.5rem; }
 .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); }
-.footer-brand img { height: 52px; margin-bottom: 1rem; filter: brightness(0) invert(1); }
+.footer-brand-row { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1rem; }
+.footer-brand-row img { height: 52px; width: 52px; object-fit: contain; border-radius: 50%; flex-shrink: 0; }
+.footer-brand-row span { color: var(--white); font-weight: 800; font-size: 1.05rem; line-height: 1.25; }
 .footer-brand p { font-size: 0.9rem; max-width: 280px; }
 .footer-col h4 { color: var(--sky); font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem; }
 .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
@@ -95,6 +99,7 @@ h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); } h2 { font-size: clamp(1.8rem, 3.5v
     <div class="nav-inner">
       <a class="nav-logo" href="index.html">
         <img src="logo.png" alt="Cleaning Right LLC" />
+        <span class="nav-brand">Cleaning<br>Right LLC</span>
       </a>
       <button class="nav-toggle" aria-label="Open menu" onclick="this.closest('nav').querySelector('.nav-links').classList.toggle('open')">
         <span></span><span></span><span></span>
@@ -250,7 +255,10 @@ h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); } h2 { font-size: clamp(1.8rem, 3.5v
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">
-        <img src="logo.png" alt="Cleaning Right LLC" />
+        <div class="footer-brand-row">
+          <img src="logo.png" alt="Cleaning Right LLC" />
+          <span>Cleaning<br>Right LLC</span>
+        </div>
         <p>Professional residential cleaning for the greater Peoria County, IL area.</p>
       </div>
       <div class="footer-col">
