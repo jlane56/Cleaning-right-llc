@@ -82,54 +82,88 @@
       to   { opacity: 1; transform: scale(1); }
     }
 
-    /* ── Logo: grows from a single point ── */
+    /* ── Logo wrap ── */
     .intro-logo-wrap {
       position: relative;
       z-index: 2;
       display: flex; align-items: center; justify-content: center;
-      animation: logoReveal 0.9s cubic-bezier(0.16, 1.4, 0.3, 1) 0.05s both;
     }
-    @keyframes logoReveal {
-      0%   { opacity: 0; transform: scale(0.04); }
-      55%  { opacity: 1; transform: scale(1.1);  }
-      75%  { transform: scale(0.96); }
-      90%  { transform: scale(1.02); }
+
+    /* ── Inline SVG — sized + persistent glow ── */
+    #intro-svg-logo {
+      width: 220px; height: 220px;
+      overflow: visible; /* let glows bleed outside bounds */
+      animation: svgGlow 1.5s ease-out 0.7s both;
+    }
+    @keyframes svgGlow {
+      0%   { filter: drop-shadow(0 0 55px rgba(255,255,255,0.9))
+                     drop-shadow(0 0 90px rgba(92,200,245,0.85)); }
+      100% { filter: drop-shadow(0 0 18px rgba(92,200,245,0.4))
+                     drop-shadow(0 0 40px rgba(92,200,245,0.12)); }
+    }
+
+    /* ── Every animated SVG part scales from its own center ── */
+    #arc-left, #arc-right, #drop,
+    #star-n1, #star-n2, #star-n3, #star-n4, #star-n5, #star-n6,
+    #star-b1, #star-b2, #star-b3, #star-b4, #star-b5 {
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+
+    /* ── The two outer arcs sweep in from their own centers ── */
+    #arc-left  { animation: arcIn 0.8s cubic-bezier(0.16, 1.2, 0.3, 1) 0.0s  both; }
+    #arc-right { animation: arcIn 0.8s cubic-bezier(0.16, 1.2, 0.3, 1) 0.15s both; }
+    @keyframes arcIn {
+      0%   { opacity: 0; transform: scale(0); }
+      60%  { opacity: 1; transform: scale(1.09); }
       100% { transform: scale(1); }
     }
 
-    .intro-logo-wrap img {
-      width: 200px; height: 200px;
-      object-fit: contain;
-      border-radius: 50%;
-      animation: logoGlow 1.2s ease-out 0.75s both;
+    /* ── Water drop grows from its tip downward ── */
+    #drop {
+      transform-origin: 50% 0%; /* top of bounding box = the sharp tip */
+      animation: dropIn 0.7s cubic-bezier(0.16, 1.6, 0.3, 1) 0.3s both;
     }
-    /* Bright white burst fades to a soft sky glow */
-    @keyframes logoGlow {
-      0%   { filter: drop-shadow(0 0 80px rgba(255,255,255,1))
-                     drop-shadow(0 0 120px rgba(92,200,245,0.9))
-                     brightness(2.2); }
-      50%  { filter: drop-shadow(0 0 40px rgba(92,200,245,0.7))
-                     drop-shadow(0 0 70px rgba(92,200,245,0.4))
-                     brightness(1.15); }
-      100% { filter: drop-shadow(0 0 22px rgba(92,200,245,0.45))
-                     drop-shadow(0 8px 36px rgba(0,0,0,0.45))
-                     brightness(1); }
+    @keyframes dropIn {
+      0%   { opacity: 0; transform: scaleY(0) scaleX(0.15); }
+      55%  { opacity: 1; transform: scaleY(1.13) scaleX(1.06); }
+      78%  { transform: scaleY(0.93) scaleX(1); }
+      100% { transform: scaleY(1) scaleX(1); }
     }
 
-    /* ── Shockwave rings that burst outward on logo impact ── */
+    /* ── Stars pop in sequence — biggest first, scatter outward ── */
+    #star-b2 { animation: starPop 0.48s cubic-bezier(0.34, 2.4, 0.64, 1) 0.68s both; } /* large sky   */
+    #star-n1 { animation: starPop 0.48s cubic-bezier(0.34, 2.4, 0.64, 1) 0.80s both; } /* large navy  */
+    #star-b1 { animation: starPop 0.45s cubic-bezier(0.34, 2.4, 0.64, 1) 0.86s both; } /* med sky     */
+    #star-b3 { animation: starPop 0.45s cubic-bezier(0.34, 2.4, 0.64, 1) 0.92s both; } /* med sky     */
+    #star-n2 { animation: starPop 0.45s cubic-bezier(0.34, 2.4, 0.64, 1) 0.98s both; } /* med navy    */
+    #star-n5 { animation: starPop 0.42s cubic-bezier(0.34, 2.4, 0.64, 1) 1.04s both; } /* sm navy     */
+    #star-n3 { animation: starPop 0.42s cubic-bezier(0.34, 2.4, 0.64, 1) 1.10s both; } /* sm navy     */
+    #star-n6 { animation: starPop 0.42s cubic-bezier(0.34, 2.4, 0.64, 1) 1.16s both; } /* sm navy     */
+    #star-b4 { animation: starPop 0.40s cubic-bezier(0.34, 2.4, 0.64, 1) 1.22s both; } /* tiny sky    */
+    #star-b5 { animation: starPop 0.40s cubic-bezier(0.34, 2.4, 0.64, 1) 1.28s both; } /* tiny sky    */
+    #star-n4 { animation: starPop 0.38s cubic-bezier(0.34, 2.4, 0.64, 1) 1.34s both; } /* tiny navy   */
+    @keyframes starPop {
+      0%   { opacity: 0; transform: scale(0); }
+      58%  { opacity: 1; transform: scale(1.65); }
+      100% { transform: scale(1); }
+    }
+
+    /* ── Shockwave rings burst outward at drop impact ── */
     .shockwave {
       position: absolute;
-      width: 200px; height: 200px;
+      inset: 0; margin: auto; /* centered over the SVG */
+      width: 220px; height: 220px;
       border-radius: 50%;
-      border: 2px solid rgba(92,200,245,0.85);
+      border: 2px solid rgba(92,200,245,0.9);
       pointer-events: none;
-      animation: shockOut 1s cubic-bezier(0, 0.6, 0.4, 1) 0.75s both;
+      animation: shockOut 1.1s cubic-bezier(0, 0.55, 0.4, 1) 0.68s both;
     }
-    .shockwave.sw2 { animation-delay: 0.92s; border-color: rgba(92,200,245,0.55); border-width: 1.5px; }
-    .shockwave.sw3 { animation-delay: 1.1s;  border-color: rgba(92,200,245,0.28); border-width: 1px; }
+    .shockwave.sw2 { animation-delay: 0.86s; border-color: rgba(92,200,245,0.55); border-width: 1.5px; }
+    .shockwave.sw3 { animation-delay: 1.05s; border-color: rgba(92,200,245,0.28); border-width: 1px; }
     @keyframes shockOut {
       0%   { transform: scale(1);   opacity: 1; }
-      100% { transform: scale(4.5); opacity: 0; }
+      100% { transform: scale(5);   opacity: 0; }
     }
 
     /* ── Brand name slams in with letter-spacing punch ── */
@@ -142,7 +176,7 @@
       letter-spacing: 0.2em;
       text-transform: uppercase;
       margin-top: 2.2rem;
-      animation: nameSlam 0.65s cubic-bezier(0.22, 1, 0.36, 1) 1.55s both;
+      animation: nameSlam 0.65s cubic-bezier(0.22, 1, 0.36, 1) 1.75s both;
     }
     @keyframes nameSlam {
       0%   { opacity: 0; transform: translateY(28px) scaleY(0.75);
@@ -160,7 +194,7 @@
       font-style: italic;
       font-size: 1.05rem;
       margin-top: 0.55rem;
-      animation: fadeSlideUp 0.8s ease 2.15s both;
+      animation: fadeSlideUp 0.8s ease 2.35s both;
     }
 
     /* ── Progress bar at bottom ── */
@@ -580,17 +614,63 @@
 
   <!-- ════════════════════════════════ INTRO ════════════════════════════════ -->
   <div id="intro">
-    <!-- bright white bloom that fires on logo impact -->
     <div id="intro-flash"></div>
-    <!-- persistent ambient sky glow -->
     <div id="intro-glow"></div>
 
     <div class="intro-logo-wrap">
-      <!-- shockwave rings burst outward from logo -->
+      <!-- shockwave rings center over the SVG -->
       <div class="shockwave"></div>
       <div class="shockwave sw2"></div>
       <div class="shockwave sw3"></div>
-      <img src="logo.png" alt="Cleaning Right LLC" />
+
+      <!-- ═══ INLINE SVG — each path has its own animation ═══ -->
+      <svg id="intro-svg-logo" xmlns="http://www.w3.org/2000/svg"
+           viewBox="0 0 375 374.999991" aria-label="Cleaning Right LLC">
+        <defs>
+          <clipPath id="clip-arc-left">
+            <path d="M 19.636719 22.832031 L 304 22.832031 L 304 352.082031 L 19.636719 352.082031 Z" clip-rule="nonzero"/>
+          </clipPath>
+          <clipPath id="clip-arc-right">
+            <path d="M 118 50 L 355.636719 50 L 355.636719 325 L 118 325 Z" clip-rule="nonzero"/>
+          </clipPath>
+        </defs>
+
+        <!-- outer ring — two interlocking arcs -->
+        <path id="arc-left" fill="#213f78" clip-path="url(#clip-arc-left)"
+          d="M 184.363281 352.164062 C 231.183594 352.164062 273.4375 332.621094 303.417969 301.25 C 278.214844 321.738281 246.074219 334.027344 211.0625 334.027344 C 130.136719 334.027344 64.535156 268.421875 64.535156 187.5 C 64.535156 106.574219 130.136719 40.96875 211.0625 40.96875 C 246.074219 40.96875 278.214844 53.257812 303.417969 73.746094 C 273.4375 42.375 231.183594 22.832031 184.363281 22.832031 C 93.417969 22.832031 19.695312 96.558594 19.695312 187.5 C 19.695312 278.441406 93.417969 352.164062 184.363281 352.164062"/>
+        <path id="arc-right" fill="#7acbf2" clip-path="url(#clip-arc-right)"
+          d="M 218.003906 50.171875 C 178.960938 50.171875 143.722656 66.472656 118.71875 92.632812 C 139.738281 75.546875 166.539062 65.296875 195.738281 65.296875 C 263.226562 65.296875 317.933594 120.011719 317.933594 187.5 C 317.933594 254.984375 263.226562 309.695312 195.738281 309.695312 C 166.539062 309.695312 139.738281 299.449219 118.71875 282.363281 C 143.722656 308.527344 178.960938 324.824219 218.003906 324.824219 C 293.847656 324.824219 355.328125 263.34375 355.328125 187.5 C 355.328125 111.65625 293.847656 50.171875 218.003906 50.171875"/>
+
+        <!-- water drop — centre element, grows from its tip -->
+        <path id="drop" fill="#7acbf2"
+          d="M 259.304688 209.019531 L 207.933594 88.296875 L 156.566406 209.019531 C 140.898438 245.839844 167.917969 286.703125 207.933594 286.703125 L 207.9375 286.703125 C 247.953125 286.703125 274.96875 245.839844 259.304688 209.019531"/>
+
+        <!-- navy sparkle stars -->
+        <path id="star-n1" fill="#213f78"
+          d="M 130.179688 174.011719 C 128.628906 196.453125 127.375 197.710938 104.929688 199.261719 C 127.375 200.808594 128.628906 202.066406 130.179688 224.507812 C 131.730469 202.066406 132.988281 200.808594 155.429688 199.261719 C 132.988281 197.710938 131.730469 196.453125 130.179688 174.011719"/>
+        <path id="star-n2" fill="#213f78"
+          d="M 152.050781 150.4375 C 151.234375 162.234375 150.574219 162.894531 138.773438 163.707031 C 150.574219 164.523438 151.234375 165.183594 152.050781 176.984375 C 152.863281 165.183594 153.527344 164.523438 165.324219 163.707031 C 153.527344 162.894531 152.863281 162.234375 152.050781 150.4375"/>
+        <path id="star-n3" fill="#213f78"
+          d="M 125.5 127.058594 C 124.6875 138.859375 124.027344 139.515625 112.226562 140.332031 C 124.027344 141.148438 124.6875 141.808594 125.5 153.605469 C 126.316406 141.808594 126.976562 141.148438 138.773438 140.332031 C 126.976562 139.515625 126.316406 138.859375 125.5 127.058594"/>
+        <path id="star-n4" fill="#213f78"
+          d="M 150.300781 121.511719 C 149.929688 126.898438 149.628906 127.199219 144.238281 127.570312 C 149.628906 127.945312 149.929688 128.246094 150.300781 133.632812 C 150.671875 128.246094 150.976562 127.945312 156.363281 127.570312 C 150.976562 127.199219 150.671875 126.898438 150.300781 121.511719"/>
+        <path id="star-n5" fill="#213f78"
+          d="M 112.214844 160.03125 C 111.769531 166.507812 111.40625 166.867188 104.929688 167.316406 C 111.40625 167.761719 111.769531 168.125 112.214844 174.601562 C 112.664062 168.125 113.023438 167.761719 119.5 167.316406 C 113.023438 166.867188 112.664062 166.507812 112.214844 160.03125"/>
+        <path id="star-n6" fill="#213f78"
+          d="M 172.609375 129.660156 C 172.160156 136.136719 171.800781 136.496094 165.324219 136.945312 C 171.800781 137.390625 172.160156 137.757812 172.609375 144.230469 C 173.054688 137.757812 173.417969 137.390625 179.894531 136.945312 C 173.417969 136.496094 173.054688 136.136719 172.609375 129.660156"/>
+
+        <!-- sky blue sparkle stars -->
+        <path id="star-b1" fill="#7acbf2"
+          d="M 230.652344 202.625 C 229.871094 191.335938 229.238281 190.703125 217.949219 189.925781 C 229.238281 189.144531 229.871094 188.515625 230.652344 177.226562 C 231.429688 188.515625 232.0625 189.144531 243.351562 189.925781 C 232.0625 190.703125 231.429688 191.335938 230.652344 202.625 Z"/>
+        <path id="star-b2" fill="#7acbf2"
+          d="M 211.144531 185.542969 C 210.027344 169.339844 209.121094 168.4375 192.917969 167.316406 C 209.121094 166.199219 210.027344 165.292969 211.144531 149.089844 C 212.265625 165.292969 213.167969 166.199219 229.371094 167.316406 C 213.167969 168.4375 212.265625 169.339844 211.144531 185.542969 Z"/>
+        <path id="star-b3" fill="#7acbf2"
+          d="M 189.261719 204.917969 C 188.457031 193.304688 187.808594 192.65625 176.195312 191.851562 C 187.808594 191.054688 188.457031 190.398438 189.261719 178.789062 C 190.0625 190.398438 190.710938 191.054688 202.324219 191.851562 C 190.710938 192.65625 190.0625 193.304688 189.261719 204.917969 Z"/>
+        <path id="star-b4" fill="#7acbf2"
+          d="M 195.640625 141.671875 C 196.035156 147.347656 196.351562 147.664062 202.023438 148.054688 C 196.351562 148.445312 196.035156 148.765625 195.640625 154.433594 C 195.25 148.765625 194.929688 148.445312 189.261719 148.054688 C 194.929688 147.664062 195.25 147.347656 195.640625 141.671875 Z"/>
+        <path id="star-b5" fill="#7acbf2"
+          d="M 206.375 127.570312 C 206.765625 133.242188 207.082031 133.558594 212.753906 133.953125 C 207.082031 134.34375 206.765625 134.664062 206.375 140.332031 C 205.984375 134.664062 205.664062 134.34375 199.996094 133.953125 C 205.664062 133.558594 205.984375 133.242188 206.375 127.570312 Z"/>
+      </svg>
     </div>
 
     <div class="intro-name">Cleaning Right LLC</div>
