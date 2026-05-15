@@ -1006,6 +1006,113 @@
       .qc-price { font-size: 2.6rem; }
       .qc-result-box { padding: 2rem 1.25rem; }
     }
+
+    /* ══════════════════════════════════════════
+       SERVICE CARD PRICING BADGE
+    ══════════════════════════════════════════ */
+    .service-price {
+      grid-column: 2;
+      display: inline-flex; align-items: center; gap: 4px;
+      background: linear-gradient(135deg, rgba(92,200,245,0.13), rgba(92,200,245,0.06));
+      color: var(--navy); font-weight: 700; font-size: 0.8rem;
+      padding: 0.3rem 0.8rem; border-radius: 50px;
+      border: 1px solid rgba(92,200,245,0.4);
+      margin-top: 0.5rem; align-self: start;
+      letter-spacing: 0.01em;
+    }
+    .service-price::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--sky); flex-shrink: 0; }
+
+    /* ══════════════════════════════════════════
+       TESTIMONIALS
+    ══════════════════════════════════════════ */
+    .testimonials {
+      background-color: var(--off-white);
+      background-image:
+        radial-gradient(rgba(28,63,115,0.028) 1px, transparent 1px),
+        radial-gradient(rgba(28,63,115,0.016) 1px, transparent 1px);
+      background-size: 22px 22px, 11px 11px;
+      background-position: 0 0, 5.5px 5.5px;
+      padding: 6rem 2rem;
+    }
+    .testimonials-header { text-align: center; margin-bottom: 0.7rem; }
+    .testimonials .section-title { text-align: center; }
+    .testimonials .section-sub   { margin: 0 auto 3rem; text-align: center; }
+    .testimonials-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 1.6rem;
+    }
+    .testimonial-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(28,63,115,0.06);
+      display: flex; flex-direction: column; gap: 1rem;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .testimonial-card:hover { transform: translateY(-5px); box-shadow: 0 16px 50px rgba(28,63,115,0.14); }
+    .testimonial-stars { color: #F5A623; font-size: 0.95rem; letter-spacing: 3px; }
+    .testimonial-quote {
+      color: var(--muted); font-size: 0.95rem;
+      line-height: 1.75; flex: 1; font-style: italic;
+      position: relative; padding-left: 1.6rem;
+    }
+    .testimonial-quote::before {
+      content: '\201C';
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; color: var(--sky); line-height: 1;
+      position: absolute; top: -0.3rem; left: 0;
+    }
+    .testimonial-author { display: flex; align-items: center; gap: 0.85rem; }
+    .testimonial-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--navy), var(--blue));
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
+    }
+    .testimonial-name     { font-weight: 700; font-size: 0.93rem; color: var(--navy); }
+    .testimonial-location { font-size: 0.77rem; color: var(--muted); margin-top: 1px; }
+
+    @media (max-width: 860px) { .testimonials-grid { grid-template-columns: 1fr; } }
+    @media (min-width: 540px) and (max-width: 860px) { .testimonials-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 640px) { .testimonials { padding: 3.5rem 1.25rem; } }
+
+    /* ══════════════════════════════════════════
+       STICKY MOBILE "BOOK NOW" CTA
+    ══════════════════════════════════════════ */
+    .sticky-cta {
+      display: none;
+      position: fixed; bottom: 1.5rem; left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      z-index: 500;
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s;
+      opacity: 0; pointer-events: none;
+    }
+    .sticky-cta.show { transform: translateX(-50%) translateY(0); opacity: 1; pointer-events: auto; }
+    @media (max-width: 640px) { .sticky-cta { display: block; } }
+    .sticky-cta .btn {
+      box-shadow: 0 8px 32px rgba(28,63,115,0.4);
+      padding: 0.95rem 2.4rem; font-size: 0.95rem;
+      white-space: nowrap;
+    }
+
+    /* ══════════════════════════════════════════
+       SCROLL-TO-TOP BUTTON
+    ══════════════════════════════════════════ */
+    .scroll-top {
+      position: fixed; bottom: 2rem; right: 1.5rem;
+      width: 46px; height: 46px; border-radius: 50%;
+      background: var(--navy); color: white;
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(28,63,115,0.35);
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.3s, transform 0.3s, background 0.2s;
+      z-index: 400;
+    }
+    .scroll-top.show  { opacity: 1; transform: translateY(0); }
+    .scroll-top:hover { background: var(--blue); transform: translateY(-3px); }
+    .scroll-top svg   { width: 22px; height: 22px; fill: currentColor; }
+    @media (max-width: 640px) { .scroll-top { bottom: 5.5rem; right: 1.2rem; } }
   </style>
 </head>
 <body>
@@ -1088,8 +1195,9 @@
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#services">Services</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#reviews">Reviews</a></li>
       <li><a href="#quote">Get a Quote</a></li>
-      <li><a href="#how">How It Works</a></li>
       <li><a href="#book" class="btn btn-sky" style="padding:0.5rem 1.3rem;font-size:0.82rem;">Book Now</a></li>
     </ul>
   </nav>
@@ -1128,15 +1236,15 @@
   <div class="stats-strip">
     <div class="stats-inner">
       <div class="stat reveal">
-        <div class="stat-number">100%</div>
+        <div class="stat-number" data-target="100" data-suffix="%">100%</div>
         <div class="stat-label">Satisfaction Guarantee</div>
       </div>
       <div class="stat reveal reveal-delay-1">
-        <div class="stat-number">4</div>
+        <div class="stat-number" data-target="4">4</div>
         <div class="stat-label">Tailored Packages</div>
       </div>
       <div class="stat reveal reveal-delay-2">
-        <div class="stat-number">5★</div>
+        <div class="stat-number" data-target="5" data-suffix="★">5★</div>
         <div class="stat-label">Quality You Can Count On</div>
       </div>
     </div>
@@ -1149,7 +1257,7 @@
         <div class="about-img-wrap reveal">
           <div class="about-img-bg"></div>
           <div class="about-img-dots"></div>
-          <img src="about-photo.jpg" alt="A beautifully cleaned home" />
+          <img src="images/room-after-web.jpg" alt="A beautifully cleaned home" />
         </div>
         <div class="about-content reveal reveal-delay-1">
           <span class="section-tag">Who We Are</span>
@@ -1182,6 +1290,7 @@
           </div>
           <h3>Basic Clean</h3>
           <p>Our signature recurring clean — the foundation every other package is built on. Ideal for keeping your home consistently fresh week after week.</p>
+          <span class="service-price">Starting at $95</span>
           <div class="service-card-footer">
             <a href="basic-clean.html" class="service-link">See Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></a>
           </div>
@@ -1193,6 +1302,7 @@
           </div>
           <h3>Deep Clean</h3>
           <p>Everything in Basic, plus a thorough top-to-bottom scrub. Perfect for first-time clients, seasonal resets, or any home needing extra attention.</p>
+          <span class="service-price">Starting at $160</span>
           <div class="service-card-footer">
             <a href="deep-clean.html" class="service-link">See Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></a>
           </div>
@@ -1204,6 +1314,7 @@
           </div>
           <h3>Short-Term Rental</h3>
           <p>Everything in Basic, plus launder &amp; restock linens, towels, and necessities. Get your Airbnb or VRBO guest-ready between every stay.</p>
+          <span class="service-price">Starting at $120</span>
           <div class="service-card-footer">
             <a href="short-term-rental.html" class="service-link">See Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></a>
           </div>
@@ -1215,6 +1326,7 @@
           </div>
           <h3>Move In / Out Clean</h3>
           <p>A comprehensive clean for transitions. Hand over spotless keys or settle into a fresh new space with total confidence.</p>
+          <span class="service-price">Starting at $185</span>
           <div class="service-card-footer">
             <a href="move-in-out.html" class="service-link">See Details <svg viewBox="0 0 24 24"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg></a>
           </div>
@@ -1539,6 +1651,57 @@
     </div>
   </section>
 
+  <!-- ════════════════════════════════ TESTIMONIALS ════════════════════════════════ -->
+  <section class="testimonials" id="reviews">
+    <div class="section-inner">
+      <div class="testimonials-header">
+        <span class="section-tag">What Clients Say</span>
+      </div>
+      <h2 class="section-title reveal">Real Words From Real Clients</h2>
+      <p class="section-sub reveal">Don't take our word for it — here's what our clients in the Peoria area have to say.</p>
+
+      <div class="testimonials-grid">
+
+        <div class="testimonial-card reveal">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-quote">I've tried three other cleaning services in Peoria and none of them came close. My house genuinely sparkles after every visit. I don't know what they use, but it works.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">SM</div>
+            <div>
+              <div class="testimonial-name">Sarah M.</div>
+              <div class="testimonial-location">Peoria, IL</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-1">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-quote">We booked the Move In/Out clean for our new house and couldn't believe the difference. Everything was spotless — we didn't have to touch a thing before moving our furniture in.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">JT</div>
+            <div>
+              <div class="testimonial-name">James &amp; Linda T.</div>
+              <div class="testimonial-location">Dunlap, IL</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card reveal reveal-delay-2">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-quote">I use the Short-Term Rental package for my Airbnb and my guests always comment on how clean the place is. Bookings went up after I switched. Worth every single penny.</p>
+          <div class="testimonial-author">
+            <div class="testimonial-avatar">RK</div>
+            <div>
+              <div class="testimonial-name">Rachel K.</div>
+              <div class="testimonial-location">Peoria, IL</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ════════════════════════════════ CTA ════════════════════════════════ -->
   <section class="cta-banner">
     <div class="cta-inner reveal">
@@ -1584,6 +1747,19 @@
       <span>Peoria County, IL</span>
     </div>
   </footer>
+
+  <!-- Sticky mobile Book Now (only visible on mobile) -->
+  <div class="sticky-cta" id="sticky-cta">
+    <a href="#book" class="btn btn-sky">
+      <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+      Book a Clean
+    </a>
+  </div>
+
+  <!-- Scroll to top -->
+  <button class="scroll-top" id="scroll-top" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <svg viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg>
+  </button>
 
   <script>
     /* ── Scroll to top on every load ── */
@@ -1749,6 +1925,44 @@
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in-view'); observer.unobserve(e.target); } });
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* ── Animated stat counters ── */
+    const counterObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el      = entry.target;
+        const target  = parseInt(el.dataset.target, 10);
+        const suffix  = el.dataset.suffix || '';
+        if (isNaN(target)) return;
+        const duration = 1400;
+        const start    = performance.now();
+        function tick(now) {
+          const t = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - t, 3); // ease-out-cubic
+          el.textContent = Math.round(eased * target) + suffix;
+          if (t < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        counterObs.unobserve(el);
+      });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('.stat-number[data-target]').forEach(el => counterObs.observe(el));
+
+    /* ── Sticky mobile CTA (show after hero scrolls out) ── */
+    const stickyCta = document.getElementById('sticky-cta');
+    const heroSection = document.querySelector('.hero');
+    if (stickyCta && heroSection) {
+      const heroObs = new IntersectionObserver(entries => {
+        stickyCta.classList.toggle('show', !entries[0].isIntersecting);
+      }, { threshold: 0.1 });
+      heroObs.observe(heroSection);
+    }
+
+    /* ── Scroll-to-top button ── */
+    const scrollTopBtn = document.getElementById('scroll-top');
+    window.addEventListener('scroll', () => {
+      scrollTopBtn.classList.toggle('show', window.scrollY > 500);
+    }, { passive: true });
   </script>
 </body>
 </html>
