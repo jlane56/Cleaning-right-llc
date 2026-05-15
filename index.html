@@ -608,6 +608,167 @@
       .stat-number { font-size: 1.5rem; }
       .stat-label  { font-size: 0.65rem; }
     }
+
+    /* ══════════════════════════════════════════
+       QUOTE CALCULATOR
+    ══════════════════════════════════════════ */
+    .quote-section {
+      background: var(--navy-dark);
+      padding: 6rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .quote-section::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(rgba(92,200,245,0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+    .quote-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      position: relative; z-index: 1;
+      text-align: center;
+    }
+    .quote-inner .section-title { color: var(--white); }
+    .quote-inner .section-sub   { color: rgba(255,255,255,0.6); margin-bottom: 2.5rem; }
+
+    /* Step indicator */
+    .qc-indicator {
+      display: flex; align-items: center; justify-content: center;
+      gap: 0; margin-bottom: 2.8rem;
+    }
+    .qc-dot {
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.35);
+      font-size: 0.78rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.35s;
+    }
+    .qc-dot.active { background: var(--sky); border-color: var(--sky); color: var(--navy-dark); }
+    .qc-dot.done   { background: rgba(92,200,245,0.18); border-color: var(--sky); color: var(--sky); }
+    .qc-line {
+      width: 52px; height: 2px;
+      background: rgba(255,255,255,0.1);
+      transition: background 0.35s;
+    }
+    .qc-line.done { background: var(--sky); }
+
+    /* Panels */
+    .qc-panel { display: none; }
+    .qc-panel.active { display: block; animation: panelIn 0.32s ease both; }
+    @keyframes panelIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .qc-sublabel {
+      color: rgba(255,255,255,0.45);
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 1.3rem;
+    }
+
+    /* Service cards */
+    .qc-cards {
+      display: grid; grid-template-columns: repeat(2,1fr);
+      gap: 1rem; max-width: 540px; margin: 0 auto;
+    }
+    .qc-card {
+      background: rgba(255,255,255,0.04);
+      border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      padding: 1.4rem 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .qc-card:hover {
+      background: rgba(92,200,245,0.08);
+      border-color: rgba(92,200,245,0.4);
+      transform: translateY(-2px);
+    }
+    .qc-card.selected {
+      background: rgba(92,200,245,0.14);
+      border-color: var(--sky);
+      box-shadow: 0 0 0 3px rgba(92,200,245,0.12);
+    }
+    .qc-card-icon  { font-size: 1.9rem; display: block; margin-bottom: 0.5rem; }
+    .qc-card-name  { color: var(--white); font-weight: 700; font-size: 0.92rem; display: block; }
+    .qc-card-desc  { color: rgba(255,255,255,0.4); font-size: 0.75rem; margin-top: 0.2rem; display: block; }
+
+    /* Pills */
+    .qc-pills {
+      display: flex; flex-wrap: wrap;
+      justify-content: center; gap: 0.55rem;
+      margin-bottom: 1.4rem;
+    }
+    .qc-pill {
+      padding: 0.52rem 1.25rem; border-radius: 50px;
+      border: 1.5px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.6);
+      font-weight: 600; font-size: 0.88rem;
+      cursor: pointer; transition: all 0.18s;
+      font-family: 'Inter', sans-serif;
+    }
+    .qc-pill:hover  { border-color: rgba(92,200,245,0.5); color: var(--white); }
+    .qc-pill.selected { background: var(--sky); border-color: var(--sky); color: var(--navy-dark); }
+
+    /* Nav buttons */
+    .qc-nav { display: flex; justify-content: center; gap: 0.8rem; margin-top: 2rem; }
+    .qc-nav .btn[disabled] { opacity: 0.38; cursor: not-allowed; pointer-events: none; }
+
+    /* Result */
+    .qc-result-box {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(92,200,245,0.25);
+      border-radius: 20px;
+      padding: 2.8rem 2rem;
+      max-width: 460px; margin: 0 auto;
+    }
+    .qc-res-service {
+      color: var(--sky); font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.35rem;
+    }
+    .qc-res-details {
+      color: rgba(255,255,255,0.45); font-size: 0.88rem; margin-bottom: 1.5rem;
+    }
+    .qc-price {
+      font-family: 'Playfair Display', serif;
+      font-size: 3.4rem; font-weight: 700;
+      color: var(--white); line-height: 1;
+      margin-bottom: 0.5rem;
+      animation: priceReveal 0.55s cubic-bezier(0.16, 1.4, 0.3, 1) both;
+    }
+    @keyframes priceReveal {
+      from { opacity: 0; transform: scale(0.65); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    .qc-price-note {
+      color: rgba(255,255,255,0.35); font-size: 0.78rem; margin-bottom: 2rem;
+    }
+    .qc-res-actions { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+    .qc-restart {
+      display: block; margin: 1.4rem auto 0;
+      background: none; border: none;
+      color: rgba(255,255,255,0.35); font-size: 0.8rem;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer; text-decoration: underline;
+      text-underline-offset: 3px; transition: color 0.2s;
+    }
+    .qc-restart:hover { color: rgba(255,255,255,0.65); }
+
+    @media (max-width: 600px) {
+      .quote-section { padding: 4rem 1.25rem; }
+      .qc-cards { grid-template-columns: repeat(2,1fr); gap: 0.7rem; }
+      .qc-card { padding: 1rem 0.7rem; }
+      .qc-card-icon { font-size: 1.5rem; }
+      .qc-price { font-size: 2.6rem; }
+      .qc-result-box { padding: 2rem 1.25rem; }
+    }
   </style>
 </head>
 <body>
@@ -690,6 +851,7 @@
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#services">Services</a></li>
+      <li><a href="#quote">Get a Quote</a></li>
       <li><a href="#how">How It Works</a></li>
       <li><a href="https://app.squareup.com/appointments/book" target="_blank" class="btn btn-sky" style="padding:0.5rem 1.3rem;font-size:0.82rem;">Book Now</a></li>
     </ul>
@@ -822,6 +984,97 @@
         </div>
 
       </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════ QUOTE CALCULATOR ════════════════════════════════ -->
+  <section class="quote-section" id="quote">
+    <div class="quote-inner">
+      <span class="section-tag" style="color:var(--sky)">Instant Estimate</span>
+      <h2 class="section-title reveal">What Will It Cost?</h2>
+      <p class="section-sub reveal">Two quick questions — get an instant price estimate, no phone call needed.</p>
+
+      <!-- Step dots -->
+      <div class="qc-indicator">
+        <div class="qc-dot active" id="dot-1">1</div>
+        <div class="qc-line" id="line-1"></div>
+        <div class="qc-dot" id="dot-2">2</div>
+        <div class="qc-line" id="line-2"></div>
+        <div class="qc-dot" id="dot-3">✓</div>
+      </div>
+
+      <!-- Step 1: Service -->
+      <div class="qc-panel active" id="qc-step-1">
+        <p class="qc-sublabel">Step 1 — Choose your service</p>
+        <div class="qc-cards">
+          <div class="qc-card" data-service="basic" onclick="qcSelectService(this)">
+            <span class="qc-card-icon">🏠</span>
+            <span class="qc-card-name">Basic Clean</span>
+            <span class="qc-card-desc">Regular maintenance clean</span>
+          </div>
+          <div class="qc-card" data-service="deep" onclick="qcSelectService(this)">
+            <span class="qc-card-icon">✨</span>
+            <span class="qc-card-name">Deep Clean</span>
+            <span class="qc-card-desc">Top-to-bottom detail clean</span>
+          </div>
+          <div class="qc-card" data-service="str" onclick="qcSelectService(this)">
+            <span class="qc-card-icon">🛎️</span>
+            <span class="qc-card-name">Short-Term Rental</span>
+            <span class="qc-card-desc">Airbnb / VRBO turnovers</span>
+          </div>
+          <div class="qc-card" data-service="moveinout" onclick="qcSelectService(this)">
+            <span class="qc-card-icon">📦</span>
+            <span class="qc-card-name">Move In / Out</span>
+            <span class="qc-card-desc">Full property clean</span>
+          </div>
+        </div>
+        <div class="qc-nav">
+          <button class="btn btn-sky" id="step1-next" onclick="qcGoStep(2)" disabled>Next →</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Home size -->
+      <div class="qc-panel" id="qc-step-2">
+        <p class="qc-sublabel">Step 2 — How big is your home?</p>
+
+        <p style="color:rgba(255,255,255,0.45);font-size:0.82rem;font-weight:600;margin-bottom:0.7rem;">Bedrooms</p>
+        <div class="qc-pills" id="bed-pills">
+          <div class="qc-pill" data-val="1" onclick="qcPill(this,'beds')">1 bed</div>
+          <div class="qc-pill" data-val="2" onclick="qcPill(this,'beds')">2 beds</div>
+          <div class="qc-pill" data-val="3" onclick="qcPill(this,'beds')">3 beds</div>
+          <div class="qc-pill" data-val="4" onclick="qcPill(this,'beds')">4 beds</div>
+          <div class="qc-pill" data-val="5" onclick="qcPill(this,'beds')">5+ beds</div>
+        </div>
+
+        <p style="color:rgba(255,255,255,0.45);font-size:0.82rem;font-weight:600;margin-bottom:0.7rem;margin-top:0.4rem;">Bathrooms</p>
+        <div class="qc-pills" id="bath-pills">
+          <div class="qc-pill" data-val="1" onclick="qcPill(this,'baths')">1 bath</div>
+          <div class="qc-pill" data-val="2" onclick="qcPill(this,'baths')">2 baths</div>
+          <div class="qc-pill" data-val="3" onclick="qcPill(this,'baths')">3 baths</div>
+          <div class="qc-pill" data-val="4" onclick="qcPill(this,'baths')">4+ baths</div>
+        </div>
+
+        <div class="qc-nav">
+          <button class="btn btn-outline-white" onclick="qcGoStep(1)">← Back</button>
+          <button class="btn btn-sky" id="step2-next" onclick="qcShowResult()" disabled>See My Estimate →</button>
+        </div>
+      </div>
+
+      <!-- Result -->
+      <div class="qc-panel" id="qc-result">
+        <div class="qc-result-box">
+          <div class="qc-res-service" id="res-service"></div>
+          <div class="qc-res-details" id="res-details"></div>
+          <div class="qc-price" id="res-price"></div>
+          <div class="qc-price-note">Estimated range · Final price confirmed at booking</div>
+          <div class="qc-res-actions">
+            <a href="https://app.squareup.com/appointments/book" target="_blank" class="btn btn-sky">Book Now</a>
+            <a href="#" class="btn btn-outline-white">Request a Quote</a>
+          </div>
+        </div>
+        <button class="qc-restart" onclick="qcRestart()">← Start over</button>
+      </div>
+
     </div>
   </section>
 
@@ -994,6 +1247,77 @@
         nav.classList.remove('menu-open');
       });
     });
+
+    /* ── Quote Calculator ── */
+    const qcState = { service: null, beds: null, baths: null };
+
+    const qcPricing = {
+      basic:     { name: 'Basic Clean',       base: [95,  130, 165, 200, 240] },
+      deep:      { name: 'Deep Clean',        base: [160, 215, 275, 335, 400] },
+      str:       { name: 'Short-Term Rental', base: [120, 155, 195, 235, 280] },
+      moveinout: { name: 'Move In / Out',     base: [185, 240, 305, 370, 440] },
+    };
+
+    function qcSelectService(card) {
+      document.querySelectorAll('.qc-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      qcState.service = card.dataset.service;
+      document.getElementById('step1-next').disabled = false;
+    }
+
+    function qcPill(pill, type) {
+      const groupId = type === 'beds' ? 'bed-pills' : 'bath-pills';
+      document.querySelectorAll(`#${groupId} .qc-pill`).forEach(p => p.classList.remove('selected'));
+      pill.classList.add('selected');
+      qcState[type] = parseInt(pill.dataset.val);
+      if (qcState.beds && qcState.baths) document.getElementById('step2-next').disabled = false;
+    }
+
+    function qcGoStep(n) {
+      document.querySelectorAll('.qc-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById(n === 1 ? 'qc-step-1' : 'qc-step-2').classList.add('active');
+      qcUpdateDots(n);
+    }
+
+    function qcUpdateDots(step) {
+      [1,2,3].forEach(i => {
+        const d = document.getElementById(`dot-${i}`);
+        d.classList.remove('active','done');
+        if (i < step) d.classList.add('done');
+        else if (i === step) d.classList.add('active');
+      });
+      [1,2].forEach(i => {
+        document.getElementById(`line-${i}`).classList.toggle('done', i < step);
+      });
+    }
+
+    function qcShowResult() {
+      const svc  = qcPricing[qcState.service];
+      const idx  = Math.min(qcState.beds, 5) - 1;
+      const bathAdd = Math.max(0, qcState.baths - 1) * 25;
+      const low  = svc.base[idx] + bathAdd;
+      const high = Math.round(low * 1.18 / 5) * 5;
+      const beds = qcState.beds, baths = qcState.baths;
+      document.getElementById('res-service').textContent = svc.name;
+      document.getElementById('res-details').textContent =
+        `${beds} bedroom${beds > 1 ? 's' : ''} · ${baths} bathroom${baths > 1 ? 's' : ''}`;
+      // re-trigger animation by cloning node
+      const priceEl = document.getElementById('res-price');
+      const clone = priceEl.cloneNode(true);
+      clone.textContent = `$${low} – $${high}`;
+      priceEl.replaceWith(clone);
+      document.querySelectorAll('.qc-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('qc-result').classList.add('active');
+      qcUpdateDots(3);
+    }
+
+    function qcRestart() {
+      qcState.service = null; qcState.beds = null; qcState.baths = null;
+      document.querySelectorAll('.qc-card, .qc-pill').forEach(el => el.classList.remove('selected'));
+      document.getElementById('step1-next').disabled = true;
+      document.getElementById('step2-next').disabled = true;
+      qcGoStep(1);
+    }
 
     /* ── Floating bubbles ── */
     const bubbleData = [
