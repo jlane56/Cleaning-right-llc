@@ -427,6 +427,24 @@
     .service-link svg { width: 14px; height: 14px; fill: var(--blue); }
     .service-link:hover { gap: 9px; }
 
+    /* ── JOBBER BOOKING SECTION ── */
+    .booking-section {
+      background: var(--off-white);
+      padding: 6rem 2rem;
+    }
+    .booking-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .booking-inner .section-sub {
+      margin-bottom: 2.5rem;
+    }
+    /* keep the Jobber iframe from overflowing on mobile */
+    #54c10acd-064c-437a-b4e8-c0a1b3b11328-4740297 iframe {
+      max-width: 100% !important;
+    }
+
     /* ── HOW IT WORKS ── */
     .how { background: var(--navy); padding: 6rem 2rem; }
     .how-inner { max-width: 1000px; margin: 0 auto; text-align: center; }
@@ -853,7 +871,7 @@
       <li><a href="#services">Services</a></li>
       <li><a href="#quote">Get a Quote</a></li>
       <li><a href="#how">How It Works</a></li>
-      <li><a href="https://app.squareup.com/appointments/book" target="_blank" class="btn btn-sky" style="padding:0.5rem 1.3rem;font-size:0.82rem;">Book Now</a></li>
+      <li><a href="#book" class="btn btn-sky" style="padding:0.5rem 1.3rem;font-size:0.82rem;">Book Now</a></li>
     </ul>
   </nav>
 
@@ -871,7 +889,7 @@
         Professional residential cleaning that brings real peace of mind — done <em>"The Way It Ought To Be."</em>
       </p>
       <div class="hero-actions">
-        <a href="https://app.squareup.com/appointments/book" target="_blank" class="btn btn-sky">
+        <a href="#book" target="_blank" class="btn btn-sky">
           <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
           Book a Clean
         </a>
@@ -921,7 +939,7 @@
           <p>Our team of professionals is dedicated to delivering a quality experience that transforms your space — every single visit.</p>
           <p class="about-tagline">"The Way It Ought To Be."</p>
           <br/>
-          <a href="https://app.squareup.com/appointments/book" target="_blank" class="btn btn-navy" style="margin-top:0.5rem;">Book Your Clean</a>
+          <a href="#book" target="_blank" class="btn btn-navy" style="margin-top:0.5rem;">Book Your Clean</a>
         </div>
       </div>
     </div>
@@ -1068,13 +1086,27 @@
           <div class="qc-price" id="res-price"></div>
           <div class="qc-price-note">Estimated range · Final price confirmed at booking</div>
           <div class="qc-res-actions">
-            <a href="https://app.squareup.com/appointments/book" target="_blank" class="btn btn-sky">Book Now</a>
+            <a href="#book" target="_blank" class="btn btn-sky">Book Now</a>
             <a href="#" class="btn btn-outline-white">Request a Quote</a>
           </div>
         </div>
         <button class="qc-restart" onclick="qcRestart()">← Start over</button>
       </div>
 
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════ BOOK NOW ════════════════════════════════ -->
+  <section class="booking-section" id="book">
+    <div class="booking-inner">
+      <span class="section-tag">Schedule Your Clean</span>
+      <h2 class="section-title reveal">Book Online in Minutes</h2>
+      <p class="section-sub reveal">Fill out the form below and we'll confirm your appointment — no phone call needed.</p>
+
+      <!-- Jobber embedded booking form -->
+      <div id="54c10acd-064c-437a-b4e8-c0a1b3b11328-4740297"></div>
+      <link rel="stylesheet" href="https://d3ey4dbjkt2f6s.cloudfront.net/assets/external/work_request_embed.css" media="screen" />
+      <script src="https://d3ey4dbjkt2f6s.cloudfront.net/assets/static_link/work_request_embed_snippet.js" clienthub_id="54c10acd-064c-437a-b4e8-c0a1b3b11328-4740297" form_url="https://clienthub.getjobber.com/client_hubs/54c10acd-064c-437a-b4e8-c0a1b3b11328/public/work_request/embedded_work_request_form?form_id=4740297"></script>
     </div>
   </section>
 
@@ -1161,7 +1193,7 @@
       <h2>Ready for a Cleaner Home?</h2>
       <p>Serving the greater Peoria County, IL area. Schedule your clean today — it only takes a minute.</p>
       <div class="cta-actions">
-        <a href="https://app.squareup.com/appointments/book" target="_blank" class="btn btn-sky">Book Now</a>
+        <a href="#book" target="_blank" class="btn btn-sky">Book Now</a>
         <a href="#services" class="btn btn-outline-white">See Packages</a>
       </div>
     </div>
@@ -1191,7 +1223,7 @@
         <ul class="footer-links">
           <li><a href="#about">About Us</a></li>
           <li><a href="#how">How It Works</a></li>
-          <li><a href="https://app.squareup.com/appointments/book" target="_blank">Book Now</a></li>
+          <li><a href="#book" target="_blank">Book Now</a></li>
         </ul>
       </div>
     </div>
