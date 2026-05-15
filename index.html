@@ -1585,7 +1585,7 @@
         <ul class="footer-links">
           <li><a href="#about">About Us</a></li>
           <li><a href="#how">How It Works</a></li>
-          <li><a href="#book" target="_blank">Book Now</a></li>
+          <li><a href="#book">Book Now</a></li>
         </ul>
       </div>
     </div>
@@ -1599,31 +1599,35 @@
     /* ── Scroll to top on every load ── */
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
-    /* ── Intro dismiss ── */
-    // Lock scroll while intro plays
-    document.body.style.overflow = 'hidden';
+    /* ── Intro: only play when opening the homepage directly (no #anchor) ── */
+    const intro = document.getElementById('intro');
+    if (window.location.hash) {
+      // Arrived via a link like index.html#book — skip intro entirely
+      if (intro) intro.remove();
+    } else {
+      // Normal homepage open — play the full animation
+      document.body.style.overflow = 'hidden';
 
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        const intro = document.getElementById('intro');
-        intro.classList.add('exit');
-        document.body.style.overflow = '';
-        setTimeout(() => intro.remove(), 900);
-      }, 2600); // 2.6s — bar finishes at 2.4s, brief pause then out
-    });
-
-    // Skip on tap/click (after 1s so accidental taps don't skip)
-    setTimeout(() => {
-      const intro = document.getElementById('intro');
-      if (intro) {
-        intro.style.cursor = 'pointer';
-        intro.addEventListener('click', () => {
+      window.addEventListener('load', () => {
+        setTimeout(() => {
           intro.classList.add('exit');
           document.body.style.overflow = '';
-          setTimeout(() => intro.remove(), 1100);
-        }, { once: true });
-      }
-    }, 1000);
+          setTimeout(() => intro.remove(), 900);
+        }, 2600);
+      });
+
+      // Skip on tap/click (after 1s so accidental taps don't skip)
+      setTimeout(() => {
+        if (intro) {
+          intro.style.cursor = 'pointer';
+          intro.addEventListener('click', () => {
+            intro.classList.add('exit');
+            document.body.style.overflow = '';
+            setTimeout(() => intro.remove(), 900);
+          }, { once: true });
+        }
+      }, 1000);
+    } // end else (no hash)
 
     /* ── Nav: transparent → white on scroll ── */
     const nav = document.getElementById('main-nav');
